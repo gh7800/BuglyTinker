@@ -4,11 +4,12 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
-import com.tencent.bugly.beta.tinker.TinkerPatchReporter;
+import com.tencent.bugly.beta.upgrade.UpgradeStateListener;
 import com.tencent.bugly.crashreport.CrashReport;
 
 public class App extends Application {
@@ -26,14 +27,10 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //crash  调试=true
+        //crash  调试时，isDebug设为true
         CrashReport.initCrashReport(getApplicationContext(),"650763bceb",true);
         //CrashReport.testJavaCrash();测试异常统计
 
-        //tinker   调试=true
-        Bugly.init(getApplicationContext(),"650763bceb",true);
-
-        //Beta.checkUpgrade();//主动检查更新
         Beta.enableHotfix = true;// 设置是否开启热更新能力，默认为true
         Beta.canAutoDownloadPatch = true;//是否自动下载补丁
         Beta.canNotifyUserRestart = true;//是否通知用户重启
@@ -78,6 +75,10 @@ public class App extends Application {
                 Log.e("onPatchRollback","");
             }
         };
+
+        Bugly.setUserId(getApplicationContext(),"8611111111111111111112");
+        //tinker   调试时，isDebug设为true
+        Bugly.init(getApplicationContext(),"650763bceb",true);
     }
 
 }

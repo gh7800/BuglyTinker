@@ -1,11 +1,14 @@
 package cn.shineiot.buglytinker;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+
+import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -16,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView textView = findViewById(R.id.textView);
-        textView.setText("1.0.1-path5");
+        textView.setText("1.0.1-path-14");
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
             }
         });
+
+        String path = Environment.getDownloadCacheDirectory().getAbsolutePath();
+        File file = new File(path);
+        if(!file.exists()){
+            file.mkdirs();
+        }
     }
 
     @Override
